@@ -10,7 +10,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Theos & Toolchain
         run: |
@@ -18,6 +18,7 @@ jobs:
           sudo chown -R $USER /opt/theos
           git clone --recursive https://github.com/theos/theos.git /opt/theos
           curl -LO https://github.com/theos/sdks/raw/master/iPhoneOS14.5.sdk.tar.xz
+          mkdir -p /opt/theos/sdks
           tar -xf iPhoneOS14.5.sdk.tar.xz -C /opt/theos/sdks/
           
       - name: Build Package
@@ -27,7 +28,7 @@ jobs:
           make package FINALPACKAGE=1
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: FFESPMenu-Package
           path: packages/*.deb
