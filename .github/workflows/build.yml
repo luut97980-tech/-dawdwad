@@ -1,0 +1,33 @@
+name: Build Theos Tweak
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Install Theos & Toolchain
+        run: |
+          sudo mkdir -p /opt/theos
+          sudo chown -R $USER /opt/theos
+          git clone --recursive https://github.com/theos/theos.git /opt/theos
+          curl -LO https://github.com/theos/sdks/raw/master/iPhoneOS14.5.sdk.tar.xz
+          tar -xf iPhoneOS14.5.sdk.tar.xz -C /opt/theos/sdks/
+          
+      - name: Build Package
+        env:
+          THEOS: /opt/theos
+        run: |
+          make package FINALPACKAGE=1
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: FFESPMenu-Package
+          path: packages/*.deb
