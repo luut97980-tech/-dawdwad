@@ -1,0 +1,9 @@
+Package: com.kanha.ffespmenu
+Name: FFESPMenu
+Depends: mobilesubstrate
+Version: 1.0.0
+Architecture: iphoneos-arm
+Description: Safe Non-Hook ESP Menu for Free Fire
+Maintainer: Groot & Kanha
+Author: Kanha
+Section: Tweaks
